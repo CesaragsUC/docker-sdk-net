@@ -4,9 +4,13 @@ This project showcases how to use Docker's SDK in .NET to automate container man
 
 * Creating containers
 * Downloading images
-* Building containers
+* Building images
+* Push image to Docker Hub
 * Running containers
 * Listing containers
+* Delete containers
+* Delete images
+* Stop containers
 * A hands-on way to explore Docker automation and .NET SDK capabilities.
 * Check out the repo and feel free to contribute or leave feedback! 🚀
 

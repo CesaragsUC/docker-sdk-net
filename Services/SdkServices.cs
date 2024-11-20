@@ -102,6 +102,8 @@ internal static class SdkServices
     {
         try
         {
+            await DownloadImage(container);
+
             if (!await DockerIsContainerExist(container))
             {
                 container = await DockerCreateAndRunContainerAsync(container);
@@ -381,7 +383,7 @@ internal static class SdkServices
 
     }
 
-    public static async Task BuildDockerImage(string dockerfilePath, string image, string tag = "")
+    public static async Task BuildDockerImage(string dockerfilePath, string image, string tag)
     {
         try
         {
@@ -418,8 +420,10 @@ internal static class SdkServices
 
     }
 
+    // to compact in .tar
     public static Stream CreateTarballForDockerfile(string contextPath)
     {
+
         try
         {
             Logger.Information("Creating Tar Ball...");
@@ -462,7 +466,7 @@ internal static class SdkServices
     private static void AddFileToTar(TarOutputStream tar, string filePath, string entryName)
     {
         var fileInfo = new FileInfo(filePath);
-        var entry = new ICSharpCode.SharpZipLib.Tar.TarEntry(new TarHeader
+        var entry = new TarEntry(new TarHeader
         {
             Name = entryName,
             Size = fileInfo.Length,
@@ -492,7 +496,7 @@ internal static class SdkServices
         }
     }
 
-    public static async Task StopContainerAsync(string containerId, string name = "")
+    public static async Task StopContainerAsync(string containerId)
     {
         try
         {
@@ -504,11 +508,11 @@ internal static class SdkServices
 
             if (stopped)
             {
-                Logger.Information("Container {Name} - {ContainerId} stopped successfully.", name, containerId);
+                Logger.Information("Container {Name} - {ContainerId} stopped successfully.", containerId);
             }
             else
             {
-                Logger.Information("Failed to stop container {Name} - {ContainerId}. It might already be stopped.", name, containerId);
+                Logger.Information("Failed to stop container {Name} - {ContainerId}. It might already be stopped.", containerId);
             }
         }
         catch (Exception ex)

@@ -14,7 +14,7 @@ internal static class Registry
         .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
         .CreateLogger();
 
-    public static async Task<ContainerInfo> Nginx(DockerClient client)
+    public static async Task<ContainerInfo> Nginx()
     {
         // You can retrive this info from a database or a configuration file
         var container = new ContainerInfo
@@ -40,7 +40,6 @@ internal static class Registry
 
         try
         {
-            await SdkServices.DownloadImage(container);
             var response = await SdkServices.RunContainerAsync(container);
             return response;
         }
@@ -52,7 +51,7 @@ internal static class Registry
 
     }
 
-    public static async Task<ContainerInfo> RabbitMQ(DockerClient client)
+    public static async Task<ContainerInfo> RabbitMQ()
     {
 
         var container = new ContainerInfo
@@ -86,7 +85,6 @@ internal static class Registry
 
         try
         {
-            await SdkServices.DownloadImage(container);
             var response = await SdkServices.RunContainerAsync(container);
             return response;
         }
@@ -97,7 +95,7 @@ internal static class Registry
         }
     }
 
-    public static async Task<ContainerInfo> GeradorCaosNet(DockerClient client)
+    public static async Task<ContainerInfo> GeradorCaosNet()
     {
         var container = new ContainerInfo
         {
@@ -122,7 +120,6 @@ internal static class Registry
 
         try
         {
-            await SdkServices.DownloadImage(container);
             var response = await SdkServices.RunContainerAsync(container);
             return response;
         }

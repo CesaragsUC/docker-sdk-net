@@ -1,7 +1,6 @@
 ﻿using Client.Containers;
 using Client.ImagesRegistry;
 using Client.Services;
-using Docker.DotNet;
 using Serilog;
 
 class Program
@@ -18,23 +17,19 @@ class Program
         Log.Information("Wellcome to Docker SDK .NET by Cesarags");
         Console.WriteLine("");
 
-        // Configure the Docker client
-        DockerClient client = new DockerClientConfiguration()
-            .CreateClient();
-
         // Create and start the containers
-        var nginx = await Registry.Nginx(client); // http://localhost:8080
-        await Registry.RabbitMQ(client); // http://localhost:15672
-        await Registry.GeradorCaosNet(client); // http://localhost:5284/
+        var nginx = await Registry.Nginx();
+        await Registry.RabbitMQ();
+        await Registry.GeradorCaosNet();
 
         //// uncomment to test the stop container
-        //await SdkServices.StopContainerAsync(nginx.Id!, nginx.Name!);
+        await SdkServices.StopContainerAsync(nginx.Id!);
 
-        //// uncomment to test the delete container
-        //await SdkServices.DeleteContainerAsync(nginx.Id!);
+        //////// uncomment to test the delete container
+        await SdkServices.DeleteContainerAsync(nginx.Id!);
 
 
-        //// uncomment to test the build image and push image to docker hub
+        ////// uncomment to test the build image and push image to docker hub
         string dockerFile = "./Dockerfile";
         string imageName = "cesarags/my-image-test";
         string tag = "latest";
@@ -47,10 +42,7 @@ class Program
         };
         await SdkServices.PushDockerImage(containerInfo);
 
-
-        // Dispose the client
-        client.Dispose();
-
+        Log.Information("All good.");
         Console.ReadKey();
     }
 

@@ -23,17 +23,17 @@ class Program
         await Registry.GeradorCaosNet();
 
         //// uncomment to test the stop container
-        await SdkServices.StopContainerAsync(nginx.Id!);
+        //  await SdkServices.StopContainerAsync(nginx.Id!);
 
         //////// uncomment to test the delete container
-        await SdkServices.DeleteContainerAsync(nginx.Id!);
+        // await SdkServices.DeleteContainerAsync(nginx.Id!);
 
 
         ////// uncomment to test the build image and push image to docker hub
-        string dockerFile = "./Dockerfile";
-        string imageName = "cesarags/my-image-test";
-        string tag = "latest";
-        await SdkServices.BuildDockerImage(dockerFile, imageName, tag);
+        //string dockerFile = "./Dockerfile";
+        //string imageName = "cesarags/my-image-test";
+        //string tag = "latest";
+        //await SdkServices.BuildDockerImage(dockerFile, imageName, tag);
 
         var containerInfo = new ContainerInfo
         {

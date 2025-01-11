@@ -431,9 +431,8 @@ internal static class SdkServices
             var tarStream = new MemoryStream();
             using (var tar = new TarOutputStream(tarStream, Encoding.UTF8))
             {
-                tar.IsStreamOwner = false; // Não feche o stream principal
+                tar.IsStreamOwner = false; 
 
-                // Inclua o Dockerfile no tarball
                 var dockerfilePath = Path.Combine(contextPath, "Dockerfile");
                 if (!File.Exists(dockerfilePath))
                 {
@@ -442,10 +441,9 @@ internal static class SdkServices
 
                 AddFileToTar(tar, dockerfilePath, "Dockerfile");
 
-                // Adicione outros arquivos necessários ao contexto do build
                 foreach (var file in Directory.GetFiles(contextPath))
                 {
-                    if (Path.GetFileName(file) != "Dockerfile") // Evite duplicar o Dockerfile
+                    if (Path.GetFileName(file) != "Dockerfile") 
                     {
                         AddFileToTar(tar, file, Path.GetFileName(file));
                     }
@@ -503,7 +501,7 @@ internal static class SdkServices
             // Attempts to stop the container
             bool stopped = await _client.Containers.StopContainerAsync(
                 containerId,
-                new ContainerStopParameters() // Does not include Timeout here
+                new ContainerStopParameters()
             );
 
             if (stopped)
@@ -546,6 +544,6 @@ internal static class SdkServices
         {
             return status;
         }
-        return ContainerStatus.Dead; // Retorna Dead como fallback
+        return ContainerStatus.Dead;
     }
 }
